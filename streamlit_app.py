@@ -80,8 +80,13 @@ def main():
     col1, col2 = st.columns([1.5, 1]) # set column proportions
 
     with col1:
-        # Left Column: Title and Inputs
-        st.title("Course Match")
+        st.markdown("""
+        <h1 style = "display: flex; align-items: center;">
+            Course Match
+            <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" width = 50 style = "margin-lef: 10px;" />
+        </h1>
+        """, unsafe_allow_html = True)
+        
         st.markdown("""
         This tool helps you determine how a course at one university (the **sending university**) compares to courses offered at another university (the **receiving university**). 
 
