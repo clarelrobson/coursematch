@@ -84,7 +84,7 @@ def main():
             <h1 style="display: flex; justify-content: space-between; align-items: center;">
                 <span>Course Match</span> 
                 <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C-removebg-preview.png" 
-                alt="logo" style="width: 40px; margin-left: 10px;"/>
+                alt="logo" style="width: 40px; margin-left: 5px;"/>
             </h1>
     """, unsafe_allow_html=True)
        
