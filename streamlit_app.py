@@ -7,7 +7,7 @@ import torch
 # Page configs
 st.set_page_config(
     page_title="CourseMatch",  # New site name
-    page_icon="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png",  # Logo png
+    page_icon="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C-removebg-preview.png",  # Logo png
     layout="wide",           # Optional: Layout customization
 )
 
@@ -83,8 +83,8 @@ def main():
         st.markdown("""
             <h1 style="display: flex; justify-content: space-between; align-items: center;">
                 <span>Course Match</span> 
-                <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" 
-                alt="logo" style="width: 40px; margin-left: 15px;"/>
+                <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C-removebg-preview.png" 
+                alt="logo" style="width: 40px; margin-left: 10px;"/>
             </h1>
     """, unsafe_allow_html=True)
        
