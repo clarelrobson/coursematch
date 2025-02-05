@@ -81,12 +81,13 @@ def main():
 
     with col1:
         st.markdown("""
-        <h1 style = "display: flex; align-items: center;">
-            Course Match     
-            <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" width = 50 style = "margin-left: 10px;" />
-        </h1>
-        """, unsafe_allow_html = True)
-        
+    <h1 style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Course Match</span> 
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" 
+        alt="logo" style="width: 40px; margin-left: 15px;"/>
+    </h1>
+""", unsafe_allow_html=True)
+       
         st.markdown("""
         This tool helps you determine how a course at one university (the **sending university**) compares to courses offered at another university (the **receiving university**). 
 
