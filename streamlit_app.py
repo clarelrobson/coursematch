@@ -83,14 +83,14 @@ def main():
         st.markdown("""
         <h1 style = "display: flex; align-items: center;">
             Course Match     
-            <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" width = 50 style = "margin-lef: 10px;" />
+            <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" width = 50 style = "margin-left: 10px;" />
         </h1>
         """, unsafe_allow_html = True)
         
         st.markdown("""
         This tool helps you determine how a course at one university (the **sending university**) compares to courses offered at another university (the **receiving university**). 
 
-        - **Sending University test**: The institution where the course you want to evaluate is offered. Enter the description of this course in the input box.
+        - **Sending University**: The institution where the course you want to evaluate is offered. Enter the description of this course in the input box.
         - **Receiving University**: The institution where you want to see comparable courses. Select this university from the dropdown menu.
 
         By analyzing course descriptions using advanced [Natural Language Processing (NLP) techniques](https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L3-v2), this tool identifies the top 10 most similar courses from the receiving university. Each result is scored to reflect how closely the course descriptions match.
