@@ -82,7 +82,7 @@ def main():
     with col1:
         st.markdown("""
         <h1 style = "display: flex; align-items: center;">
-            Course Match
+            Course Match testing pls work
             <img src="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png" width = 50 style = "margin-lef: 10px;" />
         </h1>
         """, unsafe_allow_html = True)
