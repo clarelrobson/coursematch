@@ -7,7 +7,7 @@ import torch
 # Page configs
 st.set_page_config(
     page_title="CourseMatch",  # New site name
-    page_icon="https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/C.png",  # Logo png
+    page_icon="https://github.com/clarelrobson/coursematch/blob/main/C.png",  # Logo png
     layout="wide",           # Optional: Layout customization
 )
 
