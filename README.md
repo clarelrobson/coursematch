@@ -19,7 +19,7 @@ Course Match is an NLP-based tool designed to determine course similarity across
 1. Install the requirements
 
    ```
- pip install -r requirements.txt
+    pip install -r requirements.txt
    ```
 
 2. Run the app
