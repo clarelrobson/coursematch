@@ -144,13 +144,28 @@ def main():
                 courses_df = pd.read_csv(courses_file_url)
 
                 # Check if the necessary columns are present
-                required_columns = ['Course Title', 'Description']
+                required_columns = ['Course Title', 'Description', 'Subject']
                 if not all(col in courses_df.columns for col in required_columns):
                     st.error(f"{university} courses CSV must contain the columns: {', '.join(required_columns)}.")
                     return
 
+                # Extract unique subjects for dropdown
+                subjects = sorted(courses_df['Subject'].dropna().unique())
+                selected_subject = st.selectbox("Select a course subject", ["All Subjects"] + subjects)
+
+                # Filter courses by subject (if a specific subject is selected)
+                if selected_subject != "All Subjects":
+                    filtered_df = courses_df[courses_df['Subject'] == selected_subject]
+                else:
+                    filtered_df = courses_df
+
                 # Prepare dictionaries for course titles and descriptions
                 courses = dict(zip(courses_df['Course Title'], courses_df['Description']))
+
+                # If no courses remain after filtering, show a warning
+                if not courses:
+                    st.warning(f"No courses found for the subject '{selected_subject}' at {university}. Please try another subject.")
+                return
 
                 # Compare the sending course description with the selected university's courses
                 top_10_courses = compare_courses_batch(sending_course_desc, courses)
