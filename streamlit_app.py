@@ -173,6 +173,9 @@ def main():
 
                 courses_df = pd.read_csv(courses_file_url)
 
+                # Extract list of unique subjects
+                subjects = courses_df['Subject'].unique().tolist()
+
                 # Check if the necessary columns are present
                 required_columns = ['Subject', 'Course Title', 'Description']
                 if not all(col in courses_df.columns for col in required_columns):
