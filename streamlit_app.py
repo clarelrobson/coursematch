@@ -3,6 +3,11 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
+import nltk
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
