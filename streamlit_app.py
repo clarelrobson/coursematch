@@ -5,7 +5,7 @@ import pandas as pd
 import torch
 import nltk
 
-nltk.download('punkt')
+nltk.download('punkt', download_dir='/usr/local/nltk_data')
 nltk.download('stopwords')
 
 from nltk.tokenize import word_tokenize
