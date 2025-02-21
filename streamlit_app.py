@@ -3,6 +3,13 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
+# Initialize stemmer and stopwords
+stemmer = PorterStemmer()
+stop_words = set(stopwords.words("english"))
 
 # Page configs
 st.set_page_config(
@@ -44,11 +51,20 @@ model = SentenceTransformer('paraphrase-MiniLM-L3-v2', device=device)
 
 # Compare the course description with courses from the selected university using the model
 def compare_courses_batch(sending_course_desc, receiving_course_descs):
+    # Filter receiving courses based on relevant subjects
+    relevant_subjects = identify_relevant_subjects(sending_course_desc, subjects)
+    
+    # Apply case-insensitive substring matching
+    filtered_courses = {code: desc for code, desc in receiving_courses.items() if any(subject.lower() in code.lower() for subject in relevant_subjects)}
+    
+    if not filtered_courses:
+        filtered_courses = receiving_courses  # Default to all courses if no relevant subjects found
+    
     # Encode the sending course description
     sending_course_vec = model.encode(sending_course_desc, convert_to_tensor=True, device=device)
 
     # Encode all receiving course descriptions in batch
-    receiving_descriptions = list(receiving_course_descs.values())
+    receiving_descriptions = list(filtered_courses.values())
     receiving_course_vecs = model.encode(receiving_descriptions, convert_to_tensor=True, device=device, batch_size=32)
 
     # Compute cosine similarities for all pairs at once
@@ -73,6 +89,15 @@ def get_color(score):
         return "#ffe6cc"  # orange
     else:
         return "#ffd6cc"  # red
+
+def identify_relevant_subjects(sending_course_desc, subjects):
+    # Tokenize, remove stopwords, and stem words
+    words = word_tokenize(sending_course_desc.lower())  
+    keywords = {stemmer.stem(word) for word in words if word.isalnum() and word not in stop_words}
+    
+    # Find subjects that contain a keyword as a substring (case-insensitive)
+    relevant_subjects = [subject for subject in subjects if any(stem in subject.lower() for stem in keywords)]    
+    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no matches found
 
 # Streamlit Interface
 def main():
