@@ -144,7 +144,7 @@ def main():
                 courses_df = pd.read_csv(courses_file_url)
 
                 # Check if the necessary columns are present
-                required_columns = ['Course Title', 'Description', 'Subject']
+                required_columns = ['Subject', 'Course Title', 'Description']
                 if not all(col in courses_df.columns for col in required_columns):
                     st.error(f"{university} courses CSV must contain the columns: {', '.join(required_columns)}.")
                     return
