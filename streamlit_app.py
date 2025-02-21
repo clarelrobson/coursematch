@@ -130,7 +130,7 @@ def main():
             # URLs for the university course CSV files
             psu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/psu_courses.csv"
             temple_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/temple_courses.csv"
-            wcu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/wcu_courses.csv"
+            wcu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/coursematch/refs/heads/main/wcu_courses.csv"
 
             # Load the selected university's course descriptions CSV
             try:
