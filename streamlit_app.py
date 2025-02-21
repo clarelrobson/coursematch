@@ -128,9 +128,9 @@ def main():
         # Right Column: Results and Disclaimer
         if sending_course_desc and university != "Select...":
             # URLs for the university course CSV files
-            psu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/coursematch/main/psu_courses.csv"
-            temple_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/coursematch/main/temple_courses.csv"
-            wcu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/coursematch/main/wcu_courses.csv"
+            psu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/psu_courses.csv"
+            temple_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/temple_courses.csv"
+            wcu_courses_file_url = "https://raw.githubusercontent.com/clarelrobson/credit-comparison-site/main/wcu_courses.csv"
 
             # Load the selected university's course descriptions CSV
             try:
