@@ -56,15 +56,6 @@ model = SentenceTransformer('paraphrase-MiniLM-L3-v2', device=device)
 
 # Compare the course description with courses from the selected university using the model
 def compare_courses_batch(sending_course_desc, receiving_course_descs):
-    # Filter receiving courses based on relevant subjects
-    relevant_subjects = identify_relevant_subjects(sending_course_desc, subjects)
-    
-    # Apply case-insensitive substring matching
-    filtered_courses = {code: desc for code, desc in receiving_courses.items() if any(subject.lower() in code.lower() for subject in relevant_subjects)}
-    
-    if not filtered_courses:
-        filtered_courses = receiving_courses  # Default to all courses if no relevant subjects found
-    
     # Encode the sending course description
     sending_course_vec = model.encode(sending_course_desc, convert_to_tensor=True, device=device)
 
@@ -185,8 +176,15 @@ def main():
                 # Prepare dictionaries for course titles and descriptions
                 courses = dict(zip(courses_df['Course Title'], courses_df['Description']))
 
+                # Call identify_relevant_subjects()
+                relevant_subjects = identify_relevant_subjects(sending_course_desc, subjects)
+
+                # Filter courses to only include those from relevant subjects
+                filtered_courses_df = courses_df[courses_df['Subject'].isin(relevant_subjects)]
+                filtered_courses = dict(zip(filtered_courses_df['Course Title'], filtered_courses_df['Description']))
+
                 # Compare the sending course description with the selected university's courses
-                top_10_courses = compare_courses_batch(sending_course_desc, courses)
+                top_10_courses = compare_courses_batch(sending_course_desc, filtered_courses)
 
                 # Display Relevant Subjects before similarity results
                 st.subheader("Relevant Subjects")
