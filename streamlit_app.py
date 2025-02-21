@@ -3,11 +3,19 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
+import os
 import nltk
 
-nltk.download('punkt', download_dir='/usr/local/nltk_data')
-nltk.download('stopwords')
+# Set up NLTK data directory
+nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
+os.makedirs(nltk_data_dir, exist_ok=True)  # Ensure the directory exists
+nltk.data.path.append(nltk_data_dir)  # Tell NLTK to look here
 
+# Download necessary NLTK resources
+nltk.download('punkt', download_dir=nltk_data_dir)
+nltk.download('stopwords', download_dir=nltk_data_dir)
+
+# Import NLTK tools
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
