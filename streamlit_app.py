@@ -165,7 +165,6 @@ def main():
                 # If no courses remain after filtering, show a warning
                 if not courses:
                     st.warning(f"No courses found for the subject '{selected_subject}' at {university}. Please try another subject.")
-                return
 
                 # Compare the sending course description with the selected university's courses
                 top_10_courses = compare_courses_batch(sending_course_desc, courses)
