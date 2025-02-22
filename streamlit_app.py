@@ -55,7 +55,7 @@ def compare_courses_batch(sending_course_desc, receiving_course_descs):
     sending_course_vec = model.encode(sending_course_desc, convert_to_tensor=True, device=device)
 
     # Encode all receiving course descriptions in batch
-    receiving_descriptions = list(filtered_courses.values())
+    receiving_descriptions = list(receiving_course_descs.values())
     receiving_course_vecs = model.encode(receiving_descriptions, convert_to_tensor=True, device=device, batch_size=32)
 
     # Compute cosine similarities for all pairs at once
