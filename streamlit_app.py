@@ -83,7 +83,7 @@ def get_color(score):
 
 def identify_relevant_subjects(sending_course_desc, subjects):
     vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, ngram_range=(1,2))
-     """Identifies relevant subjects based on TF-IDF similarity to the course description."""
+     #Identifies relevant subjects based on TF-IDF similarity to the course description.
     subject_vectors = vectorizer.transform(subject_list)
     course_vector = vectorizer.transform([course_description])
     
