@@ -2,8 +2,8 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
-from sentence_transformers import SentenceTransformer, util
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Page configs
 st.set_page_config(
@@ -41,7 +41,13 @@ body, div, p, li {
 
 # Initialize the NLP model (paraphrase-MiniLM-L3-v2)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-model = SentenceTransformer('paraphrase-MiniLM-L3-v2', device=device)
+
+@st.cache_resource
+def load_model():
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    return SentenceTransformer('paraphrase-MiniLM-L3-v2', device=device)
+
+model = load_model()  # Load the model once and cache it
 
 # Compare the course description with courses from the selected university using the model
 def compare_courses_batch(sending_course_desc, receiving_course_descs):
@@ -76,17 +82,15 @@ def get_color(score):
         return "#ffd6cc"  # red
 
 def identify_relevant_subjects(sending_course_desc, subjects):
-    # Use TF-IDF vectorizer to extract important words
     vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, ngram_range=(1,2))
     tfidf_matrix = vectorizer.fit_transform([sending_course_desc] + subjects)
     
-    # Extract feature names (words/phrases) from the description
-    feature_array = vectorizer.get_feature_names_out()
-    sending_keywords = set(feature_array)
-
-    # Find subjects that contain a keyword as a substring (case-insensitive)
-    relevant_subjects = [subject for subject in subjects if any(keyword in subject.lower() for keyword in sending_keywords)]
-    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no matches found
+    # Compute cosine similarity between the sending course and all subjects
+    similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:])[0]
+    
+    # Select subjects with high similarity
+    relevant_subjects = [subjects[i] for i in range(len(subjects)) if similarities[i] > 0.2]  # Adjust threshold as needed
+    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no strong match
     
 # Streamlit Interface
 def main():
