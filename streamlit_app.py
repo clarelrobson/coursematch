@@ -50,19 +50,19 @@ def load_model():
 model = load_model()  # Load the model once and cache it
 
 # Compare the course description with courses from the selected university using the model
-def compare_courses_batch(sending_course_desc, receiving_course_descs):
+def compare_courses_batch(sending_course_desc, filtered_courses):
     # Encode the sending course description
     sending_course_vec = model.encode(sending_course_desc, convert_to_tensor=True, device=device)
 
     # Encode all receiving course descriptions in batch
-    receiving_descriptions = list(receiving_course_descs.values())
+    receiving_descriptions = list(filtered_courses.values())
     receiving_course_vecs = model.encode(receiving_descriptions, convert_to_tensor=True, device=device, batch_size=32)
 
     # Compute cosine similarities for all pairs at once
     similarity_scores = util.pytorch_cos_sim(sending_course_vec, receiving_course_vecs)
 
     # Create a dictionary of similarity scores
-    results = {title: similarity_scores[0][i].item() for i, title in enumerate(receiving_course_descs.keys())}
+    results = {title: similarity_scores[0][i].item() for i, title in enumerate(filtered_courses.keys())}
 
     # Sort by similarity score (highest first) and return the top 10
     sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
