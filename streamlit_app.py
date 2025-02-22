@@ -76,14 +76,18 @@ def get_color(score):
         return "#ffd6cc"  # red
 
 def identify_relevant_subjects(sending_course_desc, subjects):
-    # Tokenize, remove stopwords, and stem words
-    words = word_tokenize(sending_course_desc.lower())  
-    keywords = {stemmer.stem(word) for word in words if word.isalnum() and word not in stop_words}
+    # Use TF-IDF vectorizer to extract important words
+    vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, ngram_range=(1,2))
+    tfidf_matrix = vectorizer.fit_transform([sending_course_desc] + subjects)
     
-    # Find subjects that contain a keyword as a substring (case-insensitive)
-    relevant_subjects = [subject for subject in subjects if any(stem in subject.lower() for stem in keywords)]    
-    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no matches found
+    # Extract feature names (words/phrases) from the description
+    feature_array = vectorizer.get_feature_names_out()
+    sending_keywords = set(feature_array)
 
+    # Find subjects that contain a keyword as a substring (case-insensitive)
+    relevant_subjects = [subject for subject in subjects if any(keyword in subject.lower() for keyword in sending_keywords)]
+    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no matches found
+    
 # Streamlit Interface
 def main():
     # Create two columns
