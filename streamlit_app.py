@@ -83,14 +83,21 @@ def get_color(score):
 
 def identify_relevant_subjects(sending_course_desc, subjects):
     vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, ngram_range=(1,2))
-    tfidf_matrix = vectorizer.fit_transform([sending_course_desc] + subjects)
+     """Identifies relevant subjects based on TF-IDF similarity to the course description."""
+    subject_vectors = vectorizer.transform(subject_list)
+    course_vector = vectorizer.transform([course_description])
     
-    # Compute cosine similarity between the sending course and all subjects
-    similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:])[0]
+    similarities = cosine_similarity(course_vector, subject_vectors)[0]
+
+    # Debugging: Print similarity scores
+    st.write("TF-IDF Similarities:", {subject: round(sim, 3) for subject, sim in zip(subject_list, similarities)})
+
+    relevant_subjects = [subject_list[i] for i in range(len(subject_list)) if similarities[i] > 0.2]
     
-    # Select subjects with high similarity
-    relevant_subjects = [subjects[i] for i in range(len(subjects)) if similarities[i] > 0.2]  # Adjust threshold as needed
-    return relevant_subjects if relevant_subjects else subjects  # Default to all subjects if no strong match
+    if not relevant_subjects:
+        return subject_list  # If no subjects meet the threshold, return all subjects
+    
+    return relevant_subjects
     
 # Streamlit Interface
 def main():
