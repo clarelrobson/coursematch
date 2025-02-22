@@ -2,28 +2,8 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
-import nltk
-import os
-
-# Define and create nltk_data directory
-nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
-os.makedirs(nltk_data_dir, exist_ok=True)
-
-# Ensure nltk searches in this directory
-nltk.data.path.append(nltk_data_dir)
-
-# Download necessary NLTK packages
-nltk.download('punkt', download_dir=nltk_data_dir)
-nltk.download('stopwords', download_dir=nltk_data_dir)
-
-# Import NLTK tools after downloading
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
-
-# Initialize stemmer and stopwords
-stemmer = PorterStemmer()
-stop_words = set(stopwords.words("english"))
+from sentence_transformers import SentenceTransformer, util
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Page configs
 st.set_page_config(
@@ -60,7 +40,7 @@ body, div, p, li {
 """, unsafe_allow_html=True)
 
 # Initialize the NLP model (paraphrase-MiniLM-L3-v2)
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # use gpu
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = SentenceTransformer('paraphrase-MiniLM-L3-v2', device=device)
 
 # Compare the course description with courses from the selected university using the model
