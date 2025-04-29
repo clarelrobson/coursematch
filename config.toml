@@ -1,8 +1,13 @@
-.streamlit/config.toml
+[server]
+headless = true
+port = 8501
 
 [theme]
-primaryColor = "#FF4B4B"
-backgroundColor = "#F0F2F6"
-secondaryBackgroundColor = "#E5E5E5"
-textColor = "#333333"
+primaryColor = "#D33682"
+backgroundColor = "#E6AE81"
+secondaryBackgroundColor = "#586E75"
+textColor = "#FDF6E3"
 font = "sans serif"
+
+[markdown]
+linkColor = "#268BD2"
