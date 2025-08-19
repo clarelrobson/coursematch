@@ -98,7 +98,7 @@ def main():
             </h1>
         """, unsafe_allow_html=True)
 
-        # --- Original intro description ---
+        # --- Intro section ---
         st.markdown("""
         This tool helps you determine how a course at one university (the **sending university**) compares to courses offered at another university (the **receiving university**). 
 
@@ -111,7 +111,7 @@ def main():
         sending_course_desc = st.text_area("Enter the description for the sending university course")
         university = st.selectbox("Select the receiving university", ["Select...", "Pennsylvania State University", "Temple University", "West Chester University of PA"])
 
-        # --- Full original similarity rating explanation ---
+        # --- Similarity rating ---
         st.markdown("""
         <h3>Similarity Rating Explanation</h3>
         <div style="background-color:#d0f0e9; padding:5px; margin-bottom:5px;">
@@ -157,19 +157,19 @@ def main():
                     </div>
                     """, unsafe_allow_html=True)
 
-                # Disclaimer
-                st.markdown("<h3 style='color:#1e3d58;'>Disclaimer</h3>", unsafe_allow_html=True)
-                st.markdown("""
-                <div style="background-color:#f0f4f8; padding: 15px; border-radius: 10px; color: #1e3d58;">
-                    <p>This tool is not an indicator of whether the sending course is/will be credited as one of the courses from the receiving university. 
-                    It's simply a starting point for students to petition for credit or for universities to easily assess which courses could potentially be assigned credit.</p>
-                </div>
-                """, unsafe_allow_html=True)
-
             except Exception as e:
                 st.error(f"Error loading courses: {e}")
         else:
             st.warning("Please enter a course description and select a university.")
+
+        # --- Disclaimer ---
+        st.markdown("<h3 style='color:#1e3d58;'>Disclaimer</h3>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style="background-color:#f0f4f8; padding: 15px; border-radius: 10px; color: #1e3d58;">
+            <p>This tool is not an indicator of whether the sending course is/will be credited as one of the courses from the receiving university. 
+            It's simply a starting point for students to petition for credit or for universities to easily assess which courses could potentially be assigned credit.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
