@@ -98,6 +98,16 @@ def main():
             </h1>
         """, unsafe_allow_html=True)
 
+        # --- Original intro description ---
+        st.markdown("""
+        This tool helps you determine how a course at one university (the **sending university**) compares to courses offered at another university (the **receiving university**). 
+
+        - **Sending University**: The institution where the course you want to evaluate is offered. Enter the description of this course in the input box.
+        - **Receiving University**: The institution where you want to see comparable courses. Select this university from the dropdown menu.
+
+        By analyzing course descriptions using advanced [Natural Language Processing (NLP) techniques](https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L3-v2), this tool identifies the top 10 most similar courses from the receiving university. Each result is scored to reflect how closely the course descriptions match.
+        """)
+
         sending_course_desc = st.text_area("Enter the description for the sending university course")
         university = st.selectbox("Select the receiving university", ["Select...", "Pennsylvania State University", "Temple University", "West Chester University of PA"])
 
@@ -163,4 +173,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
