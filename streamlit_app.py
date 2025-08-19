@@ -60,7 +60,6 @@ def identify_relevant_subjects(sending_course_desc, subjects, vectorizer=None, s
         vectorizer, subject_vectors = fit_subject_vectorizer(subjects)
     course_vector = vectorizer.transform([sending_course_desc])
     similarities = cosine_similarity(course_vector, subject_vectors)[0]
-    st.write("TF-IDF Similarities:", {subject: round(sim, 3) for subject, sim in zip(subjects, similarities)})
     relevant = [subjects[i] for i in range(len(subjects)) if similarities[i] > 0.2]
     return relevant if relevant else subjects, vectorizer, subject_vectors
 
