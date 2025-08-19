@@ -101,30 +101,41 @@ def main():
         sending_course_desc = st.text_area("Enter the description for the sending university course")
         university = st.selectbox("Select the receiving university", ["Select...", "Pennsylvania State University", "Temple University", "West Chester University of PA"])
 
+        # --- Full original similarity rating explanation ---
         st.markdown("""
-        This tool compares a sending university course to courses at a receiving university using NLP to identify the top 10 most similar courses.
-        """)
+        <h3>Similarity Rating Explanation</h3>
+        <div style="background-color:#d0f0e9; padding:5px; margin-bottom:5px;">
+            <strong>0.8 - 1.0</strong>: Very High Similarity – Descriptions are nearly identical, with minimal difference
+        </div>
+        <div style="background-color:#eaf9d6; padding:5px; margin-bottom:5px;">
+            <strong>0.6 - 0.8</strong>: High Similarity – Descriptions are very similar, with some differences
+        </div>
+        <div style="background-color:#fff9e6; padding:5px; margin-bottom:5px;">
+            <strong>0.4 - 0.6</strong>: Moderate Similarity – Descriptions have noticeable differences, but share common topics
+        </div>
+        <div style="background-color:#ffe6cc; padding:5px; margin-bottom:5px;">
+            <strong>0.2 - 0.4</strong>: Low Similarity – Descriptions have overlapping content, but are generally quite different
+        </div>
+        <div style="background-color:#ffd6cc; padding:5px; margin-bottom:5px;">
+            <strong>0.0 - 0.2</strong>: Very Low Similarity – Descriptions are largely different with little to no overlap
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         if sending_course_desc and university != "Select...":
             try:
-                # Load courses and subjects
                 courses_df = load_courses(university)
                 subjects = courses_df['Subject'].unique().tolist()
                 vectorizer, subject_vectors = fit_subject_vectorizer(subjects)
                 relevant_subjects, _, _ = identify_relevant_subjects(sending_course_desc, subjects, vectorizer, subject_vectors)
 
-                # Filter courses by relevant subjects
                 filtered_df = courses_df[courses_df['Subject'].isin(relevant_subjects)]
                 filtered_courses = dict(zip(filtered_df['Course Title'], filtered_df['Description']))
-
-                # Load cached embeddings for filtered courses
                 course_embeddings = get_course_embeddings(filtered_courses)
 
-                # Compute top 10 similar courses
                 top_10_courses = compare_courses_batch(sending_course_desc, filtered_courses, cached_embeddings=course_embeddings)
 
-                # Display relevant subjects and results
+                # Display results
                 st.subheader("Relevant Subjects")
                 st.write(", ".join(relevant_subjects) if relevant_subjects else "No relevant subjects found.")
 
@@ -136,6 +147,15 @@ def main():
                     </div>
                     """, unsafe_allow_html=True)
 
+                # Disclaimer
+                st.markdown("<h3 style='color:#1e3d58;'>Disclaimer</h3>", unsafe_allow_html=True)
+                st.markdown("""
+                <div style="background-color:#f0f4f8; padding: 15px; border-radius: 10px; color: #1e3d58;">
+                    <p>This tool is not an indicator of whether the sending course is/will be credited as one of the courses from the receiving university. 
+                    It's simply a starting point for students to petition for credit or for universities to easily assess which courses could potentially be assigned credit.</p>
+                </div>
+                """, unsafe_allow_html=True)
+
             except Exception as e:
                 st.error(f"Error loading courses: {e}")
         else:
@@ -143,3 +163,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
