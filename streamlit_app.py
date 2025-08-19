@@ -145,9 +145,6 @@ def main():
                 top_10_courses = compare_courses_batch(sending_course_desc, filtered_courses, cached_embeddings=course_embeddings)
 
                 # Display results
-                st.subheader("Relevant Subjects")
-                st.write(", ".join(relevant_subjects) if relevant_subjects else "No relevant subjects found.")
-
                 st.subheader(f"Top 10 Most Similar {university} Courses")
                 for title, score in top_10_courses:
                     st.markdown(f"""
@@ -155,6 +152,9 @@ def main():
                         <strong>{title}</strong> (Similarity Score: {score:.2f})
                     </div>
                     """, unsafe_allow_html=True)
+
+                st.subheader("Relevant Subjects")
+                st.write(", ".join(relevant_subjects) if relevant_subjects else "No relevant subjects found.")
 
             except Exception as e:
                 st.error(f"Error loading courses: {e}")
